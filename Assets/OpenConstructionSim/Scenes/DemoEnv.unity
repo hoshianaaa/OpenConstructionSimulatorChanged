@@ -1728,8 +1728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc90aae80e25fa024a146157237b4b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topicName: robot_name/groundtruth
-  childFrameName: robot_name/base_link
+  topicName: odom
+  childFrameName: base_link
   publishMessageInterval: 0.05
 --- !u!138 &1574475825
 FixedJoint:
