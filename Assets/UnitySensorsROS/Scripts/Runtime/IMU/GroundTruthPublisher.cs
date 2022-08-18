@@ -8,7 +8,7 @@ public class GroundTruthPublisher : MonoBehaviour
 {
     ROSConnection ros;
     public string topicName = "robot_name/groundtruth";
-    public string childFrameName = "robot_name/base_link";
+    public string childFrameName = "";
     private OdometryMsg message;
 
     // Publish the cube's position and rotation every N seconds
@@ -37,7 +37,7 @@ public class GroundTruthPublisher : MonoBehaviour
             float sim_time = Time.time;
             uint secs = (uint)sim_time;
             uint nsecs = (uint)((sim_time % 1) * 1e9);
-            message.header.frame_id = "map";
+            message.header.frame_id = "gps";
             message.header.stamp.sec = secs;
             message.header.stamp.nanosec = nsecs;
             message.child_frame_id = childFrameName;
