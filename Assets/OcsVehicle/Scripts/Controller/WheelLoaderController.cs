@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Unity.Robotics.ROSTCPConnector;
 using Float64 = RosMessageTypes.Std.Float64Msg;
+using Bool = RosMessageTypes.Std.BoolMsg;
 
 namespace Ocs.Vehicle.Controller
 {
@@ -17,7 +18,10 @@ namespace Ocs.Vehicle.Controller
         [SerializeField] private string steer_topic = "wheelLoader/steer";
         [SerializeField] private string boom_topic = "wheelLoader/boom";
         [SerializeField] private string bucket_topic = "wheelLoader/bucket";
+        [SerializeField] private string reverse_gear_topic = "wheelLoader/reverse_gear";
+
         private float wheel_input, steer_input, boom_input, bucket_input;
+        private bool reverse_gear;
 
         [SerializeField] private ModeManeger mode;
 
@@ -42,6 +46,7 @@ namespace Ocs.Vehicle.Controller
             ROSConnection.GetOrCreateInstance().Subscribe<Float64>(this.steer_topic, steer_callback);
             ROSConnection.GetOrCreateInstance().Subscribe<Float64>(this.boom_topic, boom_callback);
             ROSConnection.GetOrCreateInstance().Subscribe<Float64>(this.bucket_topic, bucket_callback);
+            ROSConnection.GetOrCreateInstance().Subscribe<Bool>(this.reverse_gear_topic, reverse_gear_callback);
 
         }
 
@@ -75,6 +80,8 @@ namespace Ocs.Vehicle.Controller
                 this._vehicle.SteerInput = steer_input;
                 this._vehicle.BoomInput = boom_input;
                 this._vehicle.BucketInput = bucket_input;
+                this._vehicle.ReverseGear = reverse_gear;
+
             }
         }
 
@@ -97,5 +104,10 @@ namespace Ocs.Vehicle.Controller
         {
             bucket_input = (float)bucket_message.data;
         }
+        void reverse_gear_callback(Bool reverse_gear_message)
+        {
+            reverse_gear = (bool)reverse_gear_message.data;
+        }
+
     }
 }
